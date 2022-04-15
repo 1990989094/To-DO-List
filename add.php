@@ -1,3 +1,25 @@
+<?php
+require "config.php";
+if(!empty ($_POST)){
+    $title= $_POST['title'];
+    $description = $_POST['description'];
+
+    $sql = "INSERT INTO todo(title, description) VALUE (:title, :description)";
+    $pdostatement = $pdo-> prepare($sql);
+    $result = $pdostatement->execute(
+        array(
+            ':title' => $title,
+            ':description' => $description
+        )
+    );
+    if($result){
+        echo "<scripti>alert('New ToDo is Added');</scripti>";
+        echo "<script>windows.location='index.php'</script>";
+    }
+}
+?>
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -30,7 +52,7 @@
                 <textarea name="description" class="form-control" id="" cols="30" rows="10"></textarea>
             </div>
             <div class="form-group">
-                <input type="text" class="btn btn-primary" name="" value="UPDATE">
+                <input type="submit" class="btn btn-primary" name="" value="UPDATE">
                 <a type="text" class="btn btn-warning" href="index.php">  Back </a>
             </div>
         </form>
