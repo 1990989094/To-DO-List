@@ -17,6 +17,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </head>
 <body>
+<?php
+require "config.php";
+$pdostatement = $pdo->prepare("SELECT * FROM todo ORDER BY id DESC");
+$pdostatement->execute();
+$result = $pdostatement->fetchAll();
+
+?>
 <div class="card">
     <div class="card-body">
 
@@ -37,16 +44,26 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php
+                if($result){
+                    $i = 1;
+                    foreach($result as $value){
+                        ?>
                 <tr>
-                    <td>1</td>
-                    <td>kdkfas</td>
-                    <td>sdfkdsf</td>
-                    <td>ldsfkf</td>
+                    <td><?php echo $i; ?></td>
+                    <td><?php echo $value['title'] ?></td>
+                    <td><?php echo $value['description'] ?></td>
+                    <td><?php echo date('Y-m-d', strtotime($value['created_at'])) ?></td>
                     <td>
-                        <a type="button" class="btn btn-warning" href="edit.php">Edit</a>
-                        <a type="button" class="btn btn-danger" href="">Delete</a>
+                        <a type="button" class="btn btn-warning" href="edit.php?id=<?php echo $value['id']; ?>">Edit</a>
+                        <a type="button" class="btn btn-danger" href="delete.php?id=<?php echo $value['id']; ?>">Delete</a>
                     </td>
                 </tr>
+                        <?php
+                        $i++;
+                    }
+                }
+                ?>
                 </tbody>
             </table>
         </table>

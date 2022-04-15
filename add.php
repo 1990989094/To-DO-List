@@ -13,7 +13,7 @@ if(!empty ($_POST)){
         )
     );
     if($result){
-        echo "<scripti>alert('New ToDo is Added');</scripti>";
+        echo "<script>alert('New ToDo is Added');</script>";
         echo "<script>windows.location='index.php'</script>";
     }
 }
